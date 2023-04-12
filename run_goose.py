@@ -51,8 +51,6 @@ def main():
     parser.add_argument("--wait", type=int, default=30, help="Wait for connection for X seconds")
     args = parser.parse_args()
 
-    
-
     db_connection_string = "postgresql://{}:{}@{}:{}/{}".format(
         quote(os.environ["MF_METADATA_DB_USER"]),
         quote(os.environ["MF_METADATA_DB_PSWD"]),
@@ -68,9 +66,9 @@ def main():
     ssl_query = ""
     if(_ssl_mode == "require"):
         ssl_query = "sslmode=require"
-        if _ssl_cert_path is not None: ssl_query = ssl_query + "&sslcert="+_ssl_cert_path
-        if _ssl_key_path is not None: ssl_query = ssl_query + "&sslkey="+_ssl_key_path
-        if _ssl_root_cert_path is not None: ssl_query = ssl_query + "&sslrootcert="+_ssl_root_cert_path
+        if _ssl_cert_path is not None: ssl_query = ssl_query + "&sslcert=" + _ssl_cert_path
+        if _ssl_key_path is not None: ssl_query = ssl_query + "&sslkey=" + _ssl_key_path
+        if _ssl_root_cert_path is not None: ssl_query = ssl_query + "&sslrootcert=" + _ssl_root_cert_path
     else: ssl_query = "sslmode=disable"
     db_connection_string = db_connection_string + "?" + ssl_query
 
