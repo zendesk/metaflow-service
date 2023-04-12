@@ -270,7 +270,7 @@ class DBConfiguration(object):
         else:
             ssl_query = 'sslmode=disable'
         return base_url + '?' + ssl_query
-    
+
     @property
     def dsn(self):
         if self._dsn is None:
