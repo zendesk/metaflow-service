@@ -76,7 +76,7 @@ jobs:
           POSTGRES_SSL: on
           POSTGRES_SSL_CERT_FILE: /var/lib/postgresql/server.crt
           POSTGRES_SSL_KEY_FILE: /var/lib/postgresql/server.key
-          POSTGRES_SSL_CA_FILE: : /var/lib/postgresql/root.crt
+          POSTGRES_SSL_CA_FILE: /var/lib/postgresql/root.crt
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
