@@ -10,7 +10,7 @@ jobs:
         python-version: [3.7]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: zendesk/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
@@ -30,7 +30,7 @@ jobs:
         python-version: [3.7]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: zendesk/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v2
         with:
@@ -50,9 +50,9 @@ jobs:
         python-version: [3.7]
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: zendesk/checkout@v2
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: zendesk/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install Python ${{ matrix.python-version }} dependencies
@@ -101,19 +101,19 @@ jobs:
       MF_METADATA_DB_SSL_MODE: require
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: zendesk/checkout@v2
       - name: Generate SSL certificates
         run: |
           openssl req -new -x509 -days 365 -nodes -out /certs/server.crt -keyout /certs/server.key -subj "/CN=localhost"
           openssl req -new -x509 -days 365 -nodes -out /certs/root.crt -keyout /certs/root.key -subj "/CN=localhost"
           cat /certs/root.crt >> /certs/server.crt
-      - uses: actions/setup-go@v2
+      - uses: zendesk/setup-go@v2
         with:
           go-version: ${{ matrix.golang-version }}
       - name: Install goose migration tool
         run: go install github.com/pressly/goose/v3/cmd/goose@v3.5.3
       - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v2
+        uses: zendesk/setup-python@v2
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install Python ${{ matrix.python-version }} dependencies
