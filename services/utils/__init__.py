@@ -213,10 +213,10 @@ class DBConfiguration(object):
         self._user = os.environ.get(prefix + "USER", user)
         self._password = os.environ.get(prefix + "PSWD", password)
         self._database_name = os.environ.get(prefix + "NAME", database_name)
-        self._ssl_mode = os.environ.get(prefix+"SSL_MODE", ssl_mode)
-        self._ssl_cert_path = os.environ.get(prefix+"SSL_CERT_PATH", ssl_cert_path)
-        self._ssl_key_path = os.environ.get(prefix+"SSL_KEY_PATH", ssl_key_path),
-        self._ssl_root_cert_path = os.environ.get(prefix+"SSL_ROOT_CERT_PATH", ssl_root_cert_path)
+        self._ssl_mode = os.environ.get(prefix + "SSL_MODE", ssl_mode)
+        self._ssl_cert_path = os.environ.get(prefix + "SSL_CERT_PATH", ssl_cert_path)
+        self._ssl_key_path = os.environ.get(prefix + "SSL_KEY_PATH", ssl_key_path),
+        self._ssl_root_cert_path = os.environ.get(prefix + "SSL_ROOT_CERT_PATH", ssl_root_cert_path)
         conn_str_required_values = [
             self._host,
             self._port,
@@ -259,13 +259,18 @@ class DBConfiguration(object):
         # return f'postgresql://{quote(self._user)}:{quote(self._password)}@{self._host}:{self._port}/{self._database_name}?sslmode=require'
         base_url = f'postgresql://{quote(self._user)}:{quote(self._password)}@{self._host}:{self._port}/{self._database_name}'
         ssl_query = ''
-        if(self._ssl_mode == 'require'):
+        if (self._ssl_mode == 'require'):
             ssl_query = 'sslmode=require'
-            if self._ssl_cert_path is not None: ssl_query = ssl_query + '&sslcert='+self._ssl_cert_path
-            if self._ssl_key_path is not None: ssl_query = ssl_query + '&sslkey='+self._ssl_key_path
-            if self._ssl_root_cert_path is not None: ssl_query = ssl_query + '&sslrootcert='+self._ssl_root_cert_path
-        else: ssl_query = 'sslmode=disable'
+            if self._ssl_cert_path is not None:
+                ssl_query = ssl_query + '&sslcert=' + self._ssl_cert_path
+            if self._ssl_key_path is not None:
+                ssl_query = ssl_query + '&sslkey=' + self._ssl_key_path
+            if self._ssl_root_cert_path is not None:
+                ssl_query = ssl_query + '&sslrootcert=' + self._ssl_root_cert_path
+        else:
+            ssl_query = 'sslmode=disable'
         return base_url + '?' + ssl_query
+    
     @property
     def dsn(self):
         if self._dsn is None:

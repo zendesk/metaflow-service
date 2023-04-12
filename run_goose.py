@@ -64,12 +64,16 @@ def main():
     _ssl_key_path = os.environ["MF_METADATA_DB_SSL_KEY_PATH"]
     _ssl_root_cert_path = os.environ["MF_METADATA_DB_SSL_ROOT_CERT"]
     ssl_query = ""
-    if(_ssl_mode == "require"):
+    if (_ssl_mode == "require"):
         ssl_query = "sslmode=require"
-        if _ssl_cert_path is not None: ssl_query = ssl_query + "&sslcert=" + _ssl_cert_path
-        if _ssl_key_path is not None: ssl_query = ssl_query + "&sslkey=" + _ssl_key_path
-        if _ssl_root_cert_path is not None: ssl_query = ssl_query + "&sslrootcert=" + _ssl_root_cert_path
-    else: ssl_query = "sslmode=disable"
+        if _ssl_cert_path is not None:
+            ssl_query = ssl_query + "&sslcert=" + _ssl_cert_path
+        if _ssl_key_path is not None:
+            ssl_query = ssl_query + "&sslkey=" + _ssl_key_path
+        if _ssl_root_cert_path is not None:
+            ssl_query = ssl_query + "&sslrootcert=" + _ssl_root_cert_path
+    else:
+        ssl_query = "sslmode=disable"
     db_connection_string = db_connection_string + "?" + ssl_query
 
     if args.wait:
