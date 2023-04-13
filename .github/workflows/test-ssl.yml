@@ -65,6 +65,14 @@ jobs:
   integration:
     runs-on: ubuntu-latest
 
+    steps:
+      - uses: zendesk/checkout@v2
+      - name: Generate SSL certificates
+        run: |
+          openssl req -new -x509 -days 365 -nodes -out /certs/server.crt -keyout /certs/server.key -subj "/CN=localhost"
+          openssl req -new -x509 -days 365 -nodes -out /certs/root.crt -keyout /certs/root.key -subj "/CN=localhost"
+          cat /certs/root.crt >> /certs/server.crt
+
     services:
       db_test: # This will be the hostname
         image: postgres:11
@@ -74,9 +82,9 @@ jobs:
           POSTGRES_DB: test
           POSTGRES_HOST_AUTH_METHOD: trust
           POSTGRES_SSL: on
-          POSTGRES_SSL_CERT_FILE: /var/lib/postgresql/server.crt
-          POSTGRES_SSL_KEY_FILE: /var/lib/postgresql/server.key
-          POSTGRES_SSL_CA_FILE: /var/lib/postgresql/root.crt
+          POSTGRES_SSL_CERT_FILE: /certs/server.crt
+          POSTGRES_SSL_KEY_FILE: /certs/server.key
+          POSTGRES_SSL_CA_FILE: /certs/root.crt
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -101,12 +109,6 @@ jobs:
       MF_METADATA_DB_SSL_MODE: require
 
     steps:
-      - uses: zendesk/checkout@v2
-      - name: Generate SSL certificates
-        run: |
-          openssl req -new -x509 -days 365 -nodes -out /certs/server.crt -keyout /certs/server.key -subj "/CN=localhost"
-          openssl req -new -x509 -days 365 -nodes -out /certs/root.crt -keyout /certs/root.key -subj "/CN=localhost"
-          cat /certs/root.crt >> /certs/server.crt
       - uses: zendesk/setup-go@v2
         with:
           go-version: ${{ matrix.golang-version }}
