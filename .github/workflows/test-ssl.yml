@@ -92,6 +92,10 @@ jobs:
           --health-retries 5
         ports:
           - 5432:5432
+        volumes:
+          - name: certs-volume
+            path: /certs
+
 
   integration2:
     runs-on: ubuntu-latest
