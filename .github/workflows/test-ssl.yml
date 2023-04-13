@@ -72,9 +72,9 @@ jobs:
           mkdir certs
           ls
           ls certs
-          openssl req -x509 -newkey rsa:4096 -days 365 -nodes -out /certs/server.crt -keyout /certs/server.key -subj "/CN=localhost"
-          openssl req -x509 -newkey rsa:4096 -days 365 -nodes -out /certs/root.crt -keyout /certs/root.key -subj "/CN=localhost"
-          cat /certs/root.crt >> /certs/server.crt
+          openssl req -x509 -newkey rsa:4096 -days 365 -nodes -out certs/server.crt -keyout certs/server.key -subj "/CN=localhost"
+          openssl req -x509 -newkey rsa:4096 -days 365 -nodes -out certs/root.crt -keyout certs/root.key -subj "/CN=localhost"
+          cat certs/root.crt >> certs/server.crt
           echo "SSL Certs Generated"
 
     services:
@@ -86,9 +86,9 @@ jobs:
           POSTGRES_DB: test
           POSTGRES_HOST_AUTH_METHOD: trust
           POSTGRES_SSL: on
-          POSTGRES_SSL_CERT_FILE: /certs/server.crt
-          POSTGRES_SSL_KEY_FILE: /certs/server.key
-          POSTGRES_SSL_CA_FILE: /certs/root.crt
+          POSTGRES_SSL_CERT_FILE: certs/server.crt
+          POSTGRES_SSL_KEY_FILE: certs/server.key
+          POSTGRES_SSL_CA_FILE: certs/root.crt
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
