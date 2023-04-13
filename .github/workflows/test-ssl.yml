@@ -132,4 +132,6 @@ jobs:
       - name: Add required test DB alias name for localhost
         run: echo "127.0.0.1 db_test" | sudo tee -a /etc/hosts
       - name: Run Tox
-        run: tox -v -e integration
+        run: |
+          ls
+          tox -v -e integration
