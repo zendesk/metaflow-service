@@ -116,6 +116,7 @@ jobs:
       MF_METADATA_DB_SSL_MODE: require
 
     steps:
+      - uses: zendesk/checkout@v2
       - uses: zendesk/setup-go@v2
         with:
           go-version: ${{ matrix.golang-version }}
