@@ -70,7 +70,7 @@ jobs:
       - name: Generate SSL certificates
         run: |
           mkdir certs
-          openssl req -newkey -x509 -rsa:4096 -days 365 -nodes -out /certs/server.crt -keyout /certs/server.key -subj "/CN=localhost"
+          openssl req -newkey -x509 rsa:4096 -days 365 -nodes -out /certs/server.crt -keyout /certs/server.key -subj "/CN=localhost"
           openssl req -newkey -x509 -days 365 -nodes -out /certs/root.crt -keyout /certs/root.key -subj "/CN=localhost"
           cat /certs/root.crt >> /certs/server.crt
 
