@@ -62,7 +62,7 @@ jobs:
       - name: Run Tox
         run: tox -e unit
 
-  integration:
+  integration1:
     runs-on: ubuntu-latest
 
     steps:
@@ -95,6 +95,9 @@ jobs:
         volumes:
           - ./certs:/certs
 
+  integration2:
+    runs-on: ubuntu-latest
+    
     strategy:
       matrix:
         python-version: [3.7]
