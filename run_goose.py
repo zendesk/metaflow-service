@@ -59,22 +59,23 @@ def main():
         os.environ["MF_METADATA_DB_NAME"],
     )
 
-    _ssl_mode = os.environ["MF_METADATA_DB_SSL_MODE"]
-    _ssl_cert_path = os.environ["MF_METADATA_DB_SSL_CERT_PATH"]
-    _ssl_key_path = os.environ["MF_METADATA_DB_SSL_KEY_PATH"]
-    _ssl_root_cert_path = os.environ["MF_METADATA_DB_SSL_ROOT_CERT"]
-    ssl_query = ""
-    if (_ssl_mode == "require"):
-        ssl_query = "sslmode=require"
-        if _ssl_cert_path is not None:
-            ssl_query = ssl_query + "&sslcert=" + _ssl_cert_path
-        if _ssl_key_path is not None:
-            ssl_query = ssl_query + "&sslkey=" + _ssl_key_path
-        if _ssl_root_cert_path is not None:
-            ssl_query = ssl_query + "&sslrootcert=" + _ssl_root_cert_path
+    ssl_mode = os.environ["MF_METADATA_DB_SSL_MODE"]
+    ssl_cert_path = os.environ["MF_METADATA_DB_SSL_CERT_PATH"]
+    ssl_key_path = os.environ["MF_METADATA_DB_SSL_KEY_PATH"]
+    ssl_root_cert_path = os.environ["MF_METADATA_DB_SSL_ROOT_CERT"]
+
+    if (ssl_mode == 'require'):
+        ssl_query = f'sslmode=require'
+        if ssl_cert_path is not None:
+            ssl_query = f'{ssl_query}&sslcert={ssl_cert_path}'
+        if ssl_key_path is not None:
+            ssl_query = f'{ssl_query}&sslkey={ssl_key_path}'
+        if ssl_root_cert_path is not None:
+            ssl_query = f'{ssl_query}&sslrootcert={ssl_root_cert_path}'
     else:
-        ssl_query = "sslmode=disable"
-    db_connection_string = db_connection_string + "?" + ssl_query
+        ssl_query = f'sslmode=disable'
+    
+    db_connection_string = f'{db_connection_string}?{ssl_query}'
 
     if args.wait:
         wait_for_postgres(db_connection_string, timeout_seconds=args.wait)
