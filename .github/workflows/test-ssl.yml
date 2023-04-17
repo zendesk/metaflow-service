@@ -80,16 +80,12 @@ jobs:
 
     services:
       db_test: # This will be the hostname
-        image: postgres:11
+        image: ghcr.io/infrastructure-as-code/postgres:11
         env:
           POSTGRES_USER: test
           POSTGRES_PASSWORD: test
           POSTGRES_DB: test
           POSTGRES_HOST_AUTH_METHOD: trust
-          POSTGRES_SSL: on
-          POSTGRES_SSL_CERT_FILE: ${{ github.workspace }}/server.crt
-          POSTGRES_SSL_KEY_FILE: ${{ github.workspace }}/server.key
-          POSTGRES_SSL_CA_FILE: ${{ github.workspace }}/root.crt
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
