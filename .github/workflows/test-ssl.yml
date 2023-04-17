@@ -62,19 +62,7 @@ jobs:
       - name: Run Tox
         run: tox -e unit
 
-  integration1:
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: zendesk/checkout@v2
-      - name: Generate SSL certificates
-        run: |
-          openssl req -x509 -newkey rsa:4096 -days 365 -nodes -out ${{ github.workspace }}/server.crt -keyout ${{ github.workspace }}/server.key -subj "/CN=localhost"
-          openssl req -x509 -newkey rsa:4096 -days 365 -nodes -out ${{ github.workspace }}/root.crt -keyout ${{ github.workspace }}/root.key -subj "/CN=localhost"
-          cat ${{ github.workspace }}/root.crt >> ${{ github.workspace }}/server.crt
-          echo "SSL Certs Generated"
-
-  integration2:
+  integration:
     runs-on: ubuntu-latest
     needs: integration1
 

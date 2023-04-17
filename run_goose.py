@@ -54,7 +54,7 @@ def main():
     db_connection_string = f'postgresql://{quote(os.environ["MF_METADATA_DB_USER"])}:'\
         f'{quote(os.environ["MF_METADATA_DB_PSWD"])}@{os.environ["MF_METADATA_DB_HOST"]}:'\
         f'{os.environ["MF_METADATA_DB_PORT"]}/{os.environ["MF_METADATA_DB_NAME"]}'
-    
+
     ssl_mode = os.environ["MF_METADATA_DB_SSL_MODE"]
     ssl_cert_path = os.environ["MF_METADATA_DB_SSL_CERT_PATH"]
     ssl_key_path = os.environ["MF_METADATA_DB_SSL_KEY_PATH"]
@@ -70,7 +70,7 @@ def main():
             ssl_query = f'{ssl_query}&sslrootcert={ssl_root_cert_path}'
     else:
         ssl_query = f'sslmode=disable'
-    
+
     db_connection_string = f'{db_connection_string}?{ssl_query}'
 
     if args.wait:
