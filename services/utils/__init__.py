@@ -258,8 +258,8 @@ class DBConfiguration(object):
         # postgresql://[user[:password]@][host][:port][/dbname][?param1=value1&...]
         # return f'postgresql://{quote(self._user)}:{quote(self._password)}@{self._host}:{self._port}/{self._database_name}?sslmode=require'
         base_url = f'postgresql://{quote(self._user)}:{quote(self._password)}@{self._host}:{self._port}/{self._database_name}'
-        if (self._ssl_mode == 'require'):
-            ssl_query = f'sslmode=require'
+        if (self._ssl_mode in ['allow', 'prefer', 'require', 'verify-ca', 'verify-full']):
+            ssl_query = self._ssl_mode
             if self._ssl_cert_path is not None:
                 ssl_query = f'{ssl_query}&sslcert={self._ssl_cert_path}'
             if self._ssl_key_path is not None:

@@ -60,8 +60,8 @@ def main():
     ssl_key_path = os.environ["MF_METADATA_DB_SSL_KEY_PATH"]
     ssl_root_cert_path = os.environ["MF_METADATA_DB_SSL_ROOT_CERT"]
 
-    if (ssl_mode == 'require'):
-        ssl_query = f'sslmode=require'
+    if (ssl_mode in ['allow', 'prefer', 'require', 'verify-ca', 'verify-full']):
+        ssl_query = ssl_mode
         if ssl_cert_path is not None:
             ssl_query = f'{ssl_query}&sslcert={ssl_cert_path}'
         if ssl_key_path is not None:
