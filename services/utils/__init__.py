@@ -280,7 +280,11 @@ class DBConfiguration(object):
                 user=self._user,
                 host=self._host,
                 port=self._port,
-                password=self._password
+                password=self._password,
+                sslmode=self._ssl_mode,
+                sslcert=self._ssl_cert_path,
+                sslkey=self._ssl_key_path,
+                sslrootcert=self._ssl_root_cert_path
             )
         else:
             return self._dsn
