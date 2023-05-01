@@ -268,7 +268,7 @@ class DBConfiguration(object):
                 ssl_query = f'{ssl_query}&sslrootcert={self._ssl_root_cert_path}'
         else:
             ssl_query = f'sslmode=disable'
-        
+
         print(f'{base_url}?{ssl_query}')
         return f'{base_url}?{ssl_query}'
 
