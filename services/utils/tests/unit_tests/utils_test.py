@@ -148,7 +148,7 @@ def test_db_conf_env_dsn():
         #assert DBConfiguration().dsn == 'dbname=postgres user=postgres host=localhost port=5432 password=postgres'
         assert DBConfiguration().dsn == generate_dsn(host="localhost", port=5432, user="postgres", password="postgres", database_name="postgres")
 
-    with set_env({'MF_METADATA_DB_DSN': 'dbname=testgres user=test_user host=test_host port=1234 password=test_pwd'}):
+    with set_env({'MF_METADATA_DB_DSN': 'dbname=testgres user=test_user host=test_host port=1234 password=test_pwd sslmode=disable'}):
         # valid DSN in env should set correctly.
         #assert DBConfiguration().dsn == 'dbname=testgres user=test_user host=test_host port=1234 password=test_pwd'
         assert DBConfiguration().dsn == generate_dsn(host="test_host", port=1234, user="test_user", password="test_pwd", database_name="testgres")
