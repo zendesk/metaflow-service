@@ -285,15 +285,15 @@ class DBConfiguration(object):
                 sslkey = None
                 sslrootcert = None
             kwargs = {
-                'dbname':self._database_name,
-                'user':self._user,
-                'host':self._host,
-                'port':self._port,
-                'password':self._password,
-                'sslmode':ssl_mode,
-                'sslcert':sslcert,
-                'sslkey':sslkey,
-                'sslrootcert':sslrootcert
+                'dbname': self._database_name,
+                'user': self._user,
+                'host': self._host,
+                'port': self._port,
+                'password': self._password,
+                'sslmode': ssl_mode,
+                'sslcert': sslcert,
+                'sslkey': sslkey,
+                'sslrootcert': sslrootcert
             }
             return psycopg2.extensions.make_dsn(**{k: v for k, v in kwargs.items() if v is not None})  
         else:
