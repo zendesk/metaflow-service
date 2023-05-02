@@ -275,27 +275,27 @@ class DBConfiguration(object):
     @property
     def dsn(self):
         if self._dsn is None:
-            if (self._ssl_mode in ['allow', 'prefer', 'require', 'verify-ca', 'verify-full']):
-                return psycopg2.extensions.make_dsn(
-                    dbname=self._database_name,
-                    user=self._user,
-                    host=self._host,
-                    port=self._port,
-                    password=self._password,
-                    sslmode=self._ssl_mode,
-                    sslcert=self._ssl_cert_path,
-                    sslkey=self._ssl_key_path,
-                    sslrootcert=self._ssl_root_cert_path
-                )
-            else:
-                return psycopg2.extensions.make_dsn(
-                    dbname=self._database_name,
-                    user=self._user,
-                    host=self._host,
-                    port=self._port,
-                    password=self._password,
-                    sslmode='disable'
-                )
+            ssl_mode = self._ssl_mode
+            sslcert = self._ssl_cert_path
+            sslkey = self._ssl_key_path
+            sslrootcert = self._ssl_root_cert_path
+            if (ssl_mode not in ['allow', 'prefer', 'require', 'verify-ca', 'verify-full']):
+                ssl_mode = 'disable'
+                sslcert = None
+                sslkey = None
+                sslrootcert = None
+            kwargs = {
+                'dbname':self._database_name,
+                'user':self._user,
+                'host':self._host,
+                'port':self._port,
+                'password':self._password,
+                'sslmode':ssl_mode,
+                'sslcert':sslcert,
+                'sslkey':sslkey,
+                'sslrootcert':sslrootcert
+            }
+            return psycopg2.extensions.make_dsn(**{k: v for k, v in kwargs.items() if v is not None})  
         else:
             return self._dsn
 
