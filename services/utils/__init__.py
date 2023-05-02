@@ -295,7 +295,7 @@ class DBConfiguration(object):
                 'sslkey': sslkey,
                 'sslrootcert': sslrootcert
             }
-            return psycopg2.extensions.make_dsn(**{k: v for k, v in kwargs.items() if v is not None})  
+            return psycopg2.extensions.make_dsn(**{k: v for k, v in kwargs.items() if v is not None})
         else:
             return self._dsn
 

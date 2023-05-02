@@ -8,7 +8,7 @@ def get_test_dbconf():
     Returns a DBConfiguration suitable for the test environment, or exits pytest completely upon failure
     """
     db_conf = DBConfiguration(timeout=1)
-    prefix="MF_METADATA_DB_"
+    prefix = "MF_METADATA_DB_"
     ssl_mode = os.environ.get(prefix + "SSL_MODE")
     ssl_cert_path = os.environ.get(prefix + "SSL_CERT_PATH")
     ssl_key_path = os.environ.get(prefix + "SSL_KEY_PATH"),
@@ -25,7 +25,7 @@ def get_test_dbconf():
             ssl_query = f'{ssl_query} sslrootcert={ssl_root_cert_path}'
     else:
         ssl_query = f'sslmode=disable'
-    
+
     if db_conf.dsn != f"{expected_dsn} {ssl_query}":
         pytest.exit("The test suite should only be run in a test environment. \n \
             Configured database host is not suited for running tests. \n \
