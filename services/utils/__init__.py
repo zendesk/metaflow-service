@@ -211,7 +211,12 @@ class DBConfiguration(object):
         self._host = os.environ.get(prefix + "HOST", host)
         self._port = int(os.environ.get(prefix + "PORT", port))
         self._user = os.environ.get(prefix + "USER", user)
-        self._password = os.environ.get(prefix + "PSWD", password)
+        if os.environ.get(prefix + "USE_PSWD_FILE") == "TRUE":
+            f = open(os.environ.get(prefix + "PSWD_FILE_PATH"))
+            self._password = f.read()
+        else:
+            self._password = os.environ.get(prefix + "PSWD", password)
+            
         self._database_name = os.environ.get(prefix + "NAME", database_name)
         self._ssl_mode = os.environ.get(prefix + "SSL_MODE", ssl_mode)
         self._ssl_cert_path = os.environ.get(prefix + "SSL_CERT_PATH", ssl_cert_path)
@@ -252,6 +257,9 @@ class DBConfiguration(object):
         except psycopg2.ProgrammingError:
             # This means that the DSN is unparsable.
             return None
+        
+    def update_password(self):
+        return False
 
     @property
     def connection_string_url(self):
