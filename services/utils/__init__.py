@@ -11,6 +11,7 @@ from typing import Dict
 import logging
 import psycopg2
 from distutils.version import LooseVersion
+from services.utils import logging
 
 version = pkg_resources.require("metadata_service")[0].version
 
@@ -202,6 +203,7 @@ class DBConfiguration(object):
                  pool_max: int = 10,
                  timeout: int = 60):
 
+        self.logger = logging.getLogger("DBConfig")
         self._dsn = os.environ.get(prefix + "DSN", dsn)
         # Check if it is a BAD DSN String.
         # if bad dsn string set self._dsn as None.
