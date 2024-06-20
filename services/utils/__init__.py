@@ -271,6 +271,7 @@ class DBConfiguration(object):
 
     @property
     def dsn(self):
+        logging.info("Asking for Dsn")
         if self._dsn is None:
             ssl_mode = self._ssl_mode
             sslcert = self._ssl_cert_path
